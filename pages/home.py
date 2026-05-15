@@ -1,7 +1,7 @@
 import streamlit as st
 import pymongo
 
-client = pymongo.MongoClient('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2')
+client = pymongo.MongoClient(st.secrets["MONGO_URI"])
 database = client['demoDb']
 collection = database['users']
 

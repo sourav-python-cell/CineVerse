@@ -8,7 +8,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # MongoDB connection for search history tracking
-_client = pymongo.MongoClient('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.8.2')
+_client = pymongo.MongoClient(st.secrets["MONGO_URI"])
 _db = _client['demoDb']
 search_history_col = _db['search_history']
 
