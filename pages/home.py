@@ -12,11 +12,15 @@ tab1, tab2 = st.tabs(["Login","SignUp"])
 with tab2:
 
     def set_user():
-        collection.insert_one({
+        try:
+            collection.insert_one({
             'user_name' : st.session_state['user_name'],
             'email' : st.session_state['email'],
             'password' : pass1
         })
+        except Exception as e:
+            st.warning(f"An error occured: {str(e)}")
+            st.rerun()
 
     st.markdown("<h1 style = 'text-align : center;'>CineVerseAI</h1>",unsafe_allow_html=True)
     left, middle, right = st.columns([1,1.5,1])
@@ -39,25 +43,21 @@ with tab2:
             pass1 = st.text_input("Choose Password",type="password")
             pass2 = st.text_input("Renter Password",type="password")
 
-            st.write(" ")
-            try:    
-                if st.form_submit_button("sign Up",width="stretch"):
-                    if not st.session_state.user_name.strip():
-                        st.warning("Choose a Username")
-                    elif not st.session_state.email.strip():
-                        st.warning("Enter Email Address")
-                    elif not pass1.strip():
-                        st.warning("Please choose a password")
-                    elif not pass2.strip():
-                        st.warning("Enter confirm password")
-                    elif not pass1 == pass2:
-                        st.error("Confirm password should match the password")
-                    else:
-                        set_user()
-                        st.success("signed Up successfully!!")
-                        pass
-            except Exception:
-                pass
+            st.write(" ")   
+            if st.form_submit_button("sign Up",width="stretch"):
+                if not st.session_state.user_name.strip():
+                    st.warning("Choose a Username")
+                elif not st.session_state.email.strip():
+                    st.warning("Enter Email Address")
+                elif not pass1.strip():
+                    st.warning("Please choose a password")
+                elif not pass2.strip():
+                    st.warning("Enter confirm password")
+                elif not pass1 == pass2:
+                    st.error("Confirm password should match the password")
+                else:
+                    set_user()
+                    st.success("Signed Up Successfully!!, Please Login")
 
 with tab1:
     @st.dialog("Reset your passwrod",width="small")
